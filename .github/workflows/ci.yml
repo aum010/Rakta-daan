@@ -1,0 +1,162 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: rakta
+          POSTGRES_PASSWORD: rakta
+          POSTGRES_DB: rakta_daan
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U rakta -d rakta_daan"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+
+    env:
+      DATABASE_URL: postgres://rakta:rakta@127.0.0.1:5432/rakta_daan
+      TEST_DATABASE_URL: postgres://rakta:rakta@127.0.0.1:5432/rakta_daan_test
+      APP_URL: http://localhost:3000
+      # CI-only placeholders. They are not secrets and must never be reused in
+      # production; `collectConfigWarnings()` reports them as such.
+      AUTH_SECRET: ci-only-auth-secret-not-for-production-00000000
+      OTP_PEPPER: ci-only-otp-pepper-not-for-production-000000000
+      CRON_SECRET: ci-only-cron-secret-not-for-production
+      WEBHOOK_SECRET: ci-only-webhook-secret-not-for-production
+      DEV_EXPOSE_OTP: "true"
+      MESSAGING_PROVIDER: mock
+      NEXT_TELEMETRY_DISABLED: "1"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Migrate and seed the database
+        run: |
+          pnpm db:migrate
+          pnpm db:seed:demo
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Unit and integration tests
+        run: pnpm test
+
+      - name: Production build
+        run: pnpm build
+
+      - name: Install Playwright browser
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: End-to-end journeys
+        run: pnpm test:e2e
+
+  smoke:
+    name: smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: rakta
+          POSTGRES_PASSWORD: rakta
+          POSTGRES_DB: rakta_daan
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U rakta -d rakta_daan"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+
+    env:
+      DATABASE_URL: postgres://rakta:rakta@127.0.0.1:5432/rakta_daan
+      APP_URL: http://localhost:3000
+      AUTH_SECRET: ci-only-auth-secret-not-for-production-00000000
+      OTP_PEPPER: ci-only-otp-pepper-not-for-production-000000000
+      CRON_SECRET: ci-only-cron-secret-not-for-production
+      WEBHOOK_SECRET: ci-only-webhook-secret-not-for-production
+      # `env.exposeOtp` forces this off when NODE_ENV=production, which is why
+      # the smoke suite runs against a development server.
+      DEV_EXPOSE_OTP: "true"
+      MESSAGING_PROVIDER: mock
+      NEXT_TELEMETRY_DISABLED: "1"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Migrate and seed the database
+        run: |
+          pnpm db:migrate
+          pnpm db:seed:demo
+
+      - name: Smoke through the HTTP interface
+        run: |
+          set -euo pipefail
+          pnpm exec next dev -p 3000 > /tmp/smoke-server.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+
+          ready=""
+          for _ in $(seq 1 60); do
+            if curl -fsS http://localhost:3000/api/health > /dev/null 2>&1; then
+              ready="yes"
+              break
+            fi
+            sleep 2
+          done
+          if [ -z "$ready" ]; then
+            echo "Server did not become ready" >&2
+            tail -50 /tmp/smoke-server.log >&2
+            exit 1
+          fi
+
+          SMOKE_BASE_URL=http://localhost:3000 pnpm smoke

@@ -35,6 +35,10 @@ pnpm dev           # then in another shell:
 SMOKE_BASE_URL=http://localhost:3000 pnpm smoke
 ```
 
+CI runs the same gates on every push and pull request — a `verify` job and a separate
+`smoke` job, since Next allows only one dev server per directory — in
+[.github/workflows/ci.yml](.github/workflows/ci.yml).
+
 All commands above were executed successfully — last verified **30 October 2026**:
 180 unit/integration tests and 40 Playwright tests (9 specs, 15 axe audits, 0 violations),
 plus a clean production build. See [docs/frontend/testing.md](docs/frontend/testing.md)

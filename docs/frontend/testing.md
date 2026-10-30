@@ -128,6 +128,12 @@ DEV_EXPOSE_OTP=true pnpm exec next dev -p 3010
 SMOKE_BASE_URL=http://localhost:3010 pnpm smoke
 ```
 
+CI runs the same gates on every push and pull request in
+[.github/workflows/ci.yml](../../.github/workflows/ci.yml): a `verify` job (typecheck, lint,
+unit/integration against a Postgres service, production build, 40 Playwright journeys) and a
+separate `smoke` job that boots a development server and runs the 24 HTTP checks. The jobs are
+separate because Next allows only one dev server per directory.
+
 ## 7. Not covered
 
 * Cross-browser (Firefox/WebKit) — Chromium only.
