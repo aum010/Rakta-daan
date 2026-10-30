@@ -1,0 +1,14 @@
+#!/bin/sh
+# Fast local gate: the first two commands CI runs, so a broken push is caught
+# before it costs a CI run. Enable once per clone with:
+#
+#   pnpm hooks:install        # git config core.hooksPath .githooks
+#
+# Bypass deliberately with `git push --no-verify` when the hook itself is the
+# problem (never to hide a real failure).
+set -e
+
+echo "[pre-push] running typecheck + lint"
+pnpm typecheck
+pnpm lint
+echo "[pre-push] ok"

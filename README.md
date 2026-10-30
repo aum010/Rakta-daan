@@ -238,3 +238,12 @@ Demo surface    → src/mocks/ + <DemoBanner> + robots noindex
 
 Rules of the road: one design system (no second icon/colour language), labels on every
 status, no dead buttons, no fabricated data, and both dictionaries updated together.
+
+A pre-push hook runs `pnpm typecheck` and `pnpm lint` — the first two gates CI runs — so a
+broken push fails locally first:
+
+```bash
+pnpm hooks:install    # git config core.hooksPath .githooks
+```
+
+`git push --no-verify` bypasses it when the hook itself is the problem.
