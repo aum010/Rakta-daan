@@ -1,0 +1,23 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: rakta-daan-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: rakta
+      POSTGRES_PASSWORD: rakta
+      POSTGRES_DB: rakta_daan
+      TZ: Asia/Kathmandu
+    ports:
+      # 5435 is used deliberately: 5432/5433 are commonly occupied by other local projects.
+      - "127.0.0.1:5435:5432"
+    volumes:
+      - rakta_daan_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U rakta -d rakta_daan"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  rakta_daan_pgdata:

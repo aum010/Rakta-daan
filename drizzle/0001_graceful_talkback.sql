@@ -1,0 +1,1 @@
+ALTER TABLE "blood_requests" ALTER COLUMN "contact_phone_enc" DROP NOT NULL;

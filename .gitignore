@@ -1,0 +1,17 @@
+node_modules
+.next
+out
+build
+dist
+coverage
+.env
+.env.local
+.env.*.local
+next-env.d.ts
+*.tsbuildinfo
+.DS_Store
+Thumbs.db
+.pgdata
+test-results
+playwright-report
+*.log
