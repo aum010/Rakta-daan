@@ -44,6 +44,68 @@ All commands above were executed successfully — last verified **30 October 202
 plus a clean production build. See [docs/frontend/testing.md](docs/frontend/testing.md)
 for the full results and the failures found and fixed along the way.
 
+## Backend API (NestJS)
+
+The NestJS backend provides authentication, user management, blood request creation,
+donor matching, and data persistence.
+
+### Quick Start
+
+```bash
+# Start PostgreSQL (if not running)
+cd c:\Users\huheh\Desktop\Rakta-Daan
+docker-compose up -d postgres redis
+
+# Setup database
+cd apps/api
+npx prisma migrate deploy
+npx prisma generate
+
+# Start API server
+pnpm start:prod
+# API available at http://localhost:4000
+# Swagger docs at http://localhost:4000/api/docs
+```
+
+### Environment Variables
+
+Copy `.env.example` and update with your configuration:
+
+```bash
+cp .env.example .env
+# Edit .env with your database, JWT secrets, SMS credentials, etc.
+```
+
+### API Endpoints
+
+- `POST /auth/otp/request` - Request OTP for phone
+- `POST /auth/otp/verify` - Verify OTP and get session
+- `POST /auth/logout` - Logout session
+- `GET /donors` - Get donor profiles
+- `POST /donors` - Create donor profile
+- `GET /donors/me` - Get current user donor profile
+- `PATCH /donors/me` - Update donor profile
+- `GET /donors/search` - Find matching donors
+- `GET /requests` - Get blood requests
+- `POST /requests` - Create blood request
+- `GET /requests/stats` - Get request statistics
+- `POST /admin/stats` - Get admin statistics
+
+See [http://localhost:4000/api/docs](http://localhost:4000/api/docs) for complete API documentation.
+
+### Current Status
+
+| Component | Status |
+|-----------|--------|
+| TypeScript compilation | ✅ 0 errors |
+| PostgreSQL database | ✅ Running on port 5432 |
+| NestJS API server | ✅ Running on port 4000 |
+| Swagger documentation | ✅ Available at /api/docs |
+| Docker setup | ✅ docker-compose.yml ready |
+| Deployment guide | ✅ DEPLOYMENT.md created |
+
+See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed deployment instructions.
+
 ## What is real and what is simulated
 
 | Real (verified by tests) | Simulated (clearly labelled, browser-local) |
@@ -90,6 +152,25 @@ as an integration boundary (full list: [docs/frontend/frontend-limitations.md](d
 - **Accessibility review with real assistive tech** (screen-reader passes in both languages,
   high-contrast mode) is outstanding — see
   [docs/frontend/accessibility.md](docs/frontend/accessibility.md) §3.
+
+## What's improved
+
+Recent improvements to the user interface and typography:
+
+- **SF Pro font family** - Native iOS/Apple system font with Nepali fallbacks for better readability
+- **Enhanced color palette** - Blood-red brand colors with 50-900 scale for consistent branding
+- **Better typography** - Improved line heights, letter spacing, and text wrapping
+- **Refined spacing** - Better padding and margins for improved reading rhythm
+- **Improved cards** - Subtle borders and hover states with consistent shadow scales
+- **Better buttons** - Enhanced primary/secondary/ghost button hierarchy
+- **Modern inputs** - Focus states, disabled states, and clear error messaging
+- **Refined badges** - Brand, success, warning, danger, and info variants
+- **Smooth animations** - Soft transitions with appropriate easing curves
+- **Responsive containers** - Three-tier layout system for mobile, tablet, and desktop
+
+The UI now uses SF Pro Display and SF Pro Text as primary fonts with system fallbacks for
+best readability across platforms. The color scheme uses a 500-series blood-red palette
+(--color-brand-50 through --color-brand-900) for consistent branding and visual hierarchy.
 
 ## Mobile coordination prototype (`/en/app`)
 
@@ -247,3 +328,5 @@ pnpm hooks:install    # git config core.hooksPath .githooks
 ```
 
 `git push --no-verify` bypasses it when the hook itself is the problem.
+#   R a k t a - d a a n  
+ 
