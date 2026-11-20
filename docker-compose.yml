@@ -1,23 +1,77 @@
+version: "3.8"
+
 services:
-  db:
+  postgres:
     image: postgres:16-alpine
-    container_name: rakta-daan-db
-    restart: unless-stopped
+    container_name: rakta-daan-postgres
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_USER: rakta
       POSTGRES_PASSWORD: rakta
       POSTGRES_DB: rakta_daan
-      TZ: Asia/Kathmandu
-    ports:
-      # 5435 is used deliberately: 5432/5433 are commonly occupied by other local projects.
-      - "127.0.0.1:5435:5432"
     volumes:
-      - rakta_daan_pgdata:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U rakta -d rakta_daan"]
-      interval: 5s
+      interval: 10s
       timeout: 5s
-      retries: 20
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: rakta-daan-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile
+    container_name: rakta-daan-api
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=postgresql://rakta:rakta@postgres:5432/rakta_daan
+      - DIRECT_DATABASE_URL=postgresql://rakta:rakta@postgres:5432/rakta_daan
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=${JWT_SECRET:-dev-jwt-secret-change-in-production}
+      - JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET:-dev-refresh-secret-change-in-production}
+      - OTP_PEPPER=${OTP_PEPPER:-dev-otp-pepper-change-in-production}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./apps/api:/app
+      - /app/node_modules
+
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+    container_name: rakta-daan-web
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_API_URL=http://localhost:4000
+      - NEXT_PUBLIC_APP_URL=http://localhost:3000
+    depends_on:
+      - api
+    volumes:
+      - ./apps/web:/app
+      - /app/node_modules
 
 volumes:
-  rakta_daan_pgdata:
+  postgres_data:
+  redis_data:

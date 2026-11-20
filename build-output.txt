@@ -1,0 +1,543 @@
+﻿node.exe : [96msrc/admin/admin.service.ts[0m:[93m17[0m:[93m7[0m - 
+[91merror[0m[90m TS2322: [0mType '{ blood_requests: { select: { 
+public_id: true; }; }; users_abuse_reports_reporter_user_idTousers: { 
+select: { id: true; name: true; phone_masked: true; }; }; 
+users_abuse_reports_resolved_by_user_idTousers: { ...; }; }' is not 
+assignable to type 'never'.
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([96msrc/admin/...o type 'never 
+   '.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+[7m17[0m       include: {
+[7m  [0m [91m      ~~~~~~~[0m
+
+  [96msrc/admin/admin.service.ts[0m:[93m17[0m:[93m7[0m
+    [7m 17[0m       include: {
+    [7m   [0m [96m      ~~~~~~~~~~[0m
+    [7m 18[0m         blood_requests: { select: { public_id: true } },
+    [7m   [0m 
+[96m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+    [7m...[0m 
+    [7m 20[0m         users_abuse_reports_resolved_by_user_idTousers: { 
+select: { id: true, name: true, phone_masked: true } },
+    [7m   [0m [96m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+    [7m 21[0m       },
+    [7m   [0m [96m~~~~~~~[0m
+    The expected type comes from property 'include' which is declared here 
+on type '{ where: { id: string; }; include: never; }'
+[96msrc/admin/admin.service.ts[0m:[93m37[0m:[93m7[0m - 
+[91merror[0m[90m TS2322: [0mType '{ blood_requests: { select: { 
+public_id: true; }; }; users_abuse_reports_reporter_user_idTousers: { 
+select: { id: true; name: true; phone_masked: true; }; }; }' is not 
+assignable to type 'never'.
+
+[7m37[0m       include: {
+[7m  [0m [91m      ~~~~~~~[0m
+[96msrc/admin/admin.service.ts[0m:[93m50[0m:[93m7[0m - 
+[91merror[0m[90m TS2322: [0mType '{ organizations: { select: { name: 
+true; slug: true; }; }; districts: { select: { name_en: true; }; }; }' is 
+not assignable to type 'never'.
+
+[7m50[0m       include: {
+[7m  [0m [91m      ~~~~~~~[0m
+[96msrc/admin/admin.service.ts[0m:[93m60[0m:[93m76[0m - 
+[91merror[0m[90m TS2300: [0mDuplicate identifier 'verified'.
+
+[7m60[0m   async updateOrganizationVerification(adminUserId: string, 
+orgId: string, verified: boolean, note?: string) {
+[7m  [0m [91m                                                             
+              ~~~~~~~~[0m
+[96msrc/admin/admin.service.ts[0m:[93m74[0m:[93m23[0m - 
+[91merror[0m[90m TS2367: [0mThis comparison appears to be unintentional 
+because the types 'boolean' and 'string' have no overlap.
+
+[7m74[0m     if (!adminUser || !adminUser.role === "admin") {
+[7m  [0m [91m                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[96msrc/admin/admin.service.ts[0m:[93m78[0m:[93m41[0m - 
+[91merror[0m[90m TS1005: [0m':' expected.
+
+[7m78[0m     const status = verified ? "verified"verified : 
+"verified"rejected;
+[7m  [0m [91m                                        ~~~~~~~~[0m
+[96msrc/admin/admin.service.ts[0m:[93m78[0m:[93m41[0m - 
+[91merror[0m[90m TS2300: [0mDuplicate identifier 'verified'.
+
+[7m78[0m     const status = verified ? "verified"verified : 
+"verified"rejected;
+[7m  [0m [91m                                        ~~~~~~~~[0m
+[96msrc/admin/admin.service.ts[0m:[93m78[0m:[93m62[0m - 
+[91merror[0m[90m TS1005: [0m',' expected.
+
+[7m78[0m     const status = verified ? "verified"verified : 
+"verified"rejected;
+[7m  [0m [91m                                                             
+~~~~~~~~[0m
+[96msrc/admin/admin.service.ts[0m:[93m78[0m:[93m62[0m - 
+[91merror[0m[90m TS7005: [0mVariable 'rejected' implicitly has an 'any' 
+type.
+
+[7m78[0m     const status = verified ? "verified"verified : 
+"verified"rejected;
+[7m  [0m [91m                                                             
+~~~~~~~~[0m
+[96msrc/admin/admin.service.ts[0m:[93m83[0m:[93m9[0m - 
+[91merror[0m[90m TS2353: [0mObject literal may only specify known 
+properties, and 'verification' does not exist in type 
+'(Without<organizationsUpdateInput, organizationsUncheckedUpdateInput> & 
+organizationsUncheckedUpdateInput) | (Without<...> & 
+organizationsUpdateInput)'.
+
+[7m83[0m         verification: status,
+[7m  [0m [91m        ~~~~~~~~~~~~[0m
+
+  [96m../../node_modules/.pnpm/@prisma+client@5.22.0_prisma@5.22.0/node_modu
+les/.prisma/client/index.d.ts[0m:[93m8426[0m:[93m5[0m
+    [7m8426[0m     data: XOR<organizationsUpdateInput, 
+organizationsUncheckedUpdateInput>
+    [7m    [0m [96m    ~~~~[0m
+    The expected type comes from property 'data' which is declared here on 
+type '{ select?: organizationsSelect<DefaultArgs> | null | undefined; data: 
+(Without<organizationsUpdateInput, organizationsUncheckedUpdateInput> & 
+organizationsUncheckedUpdateInput) | (Without<...> & 
+organizationsUpdateInput); where: organizationsWhereUniqueInput; }'
+[96msrc/admin/admin.service.ts[0m:[93m101[0m:[93m19[0m - 
+[91merror[0m[90m TS2339: [0mProperty 'blood_requests' does not exist on 
+type 'PrismaService'.
+
+[7m101[0m       this.prisma.blood_requests.count(),
+[7m   [0m [91m                  ~~~~~~~~~~~~~~[0m
+[96msrc/auth/auth.service.ts[0m:[93m25[0m:[93m42[0m - 
+[91merror[0m[90m TS2339: [0mProperty 'otp_codes' does not exist on type 
+'PrismaService'.
+
+[7m25[0m     const recentOtps = await this.prisma.otp_codes.findMany({
+[7m  [0m [91m                                         ~~~~~~~~~[0m
+[96msrc/auth/auth.service.ts[0m:[93m43[0m:[93m41[0m - 
+[91merror[0m[90m TS2339: [0mProperty 'otp_codes' does not exist on type 
+'PrismaService'.
+
+[7m43[0m     const otpRecord = await this.prisma.otp_codes.create({
+[7m  [0m [91m                                        ~~~~~~~~~[0m
+[96msrc/auth/auth.service.ts[0m:[93m81[0m:[93m41[0m - 
+[91merror[0m[90m TS2339: [0mProperty 'otp_codes' does not exist on type 
+'PrismaService'.
+
+[7m81[0m     const otpRecord = await this.prisma.otp_codes.findFirst({
+[7m  [0m [91m                                        ~~~~~~~~~[0m
+[96msrc/auth/auth.service.ts[0m:[93m105[0m:[93m25[0m - 
+[91merror[0m[90m TS2339: [0mProperty 'otp_codes' does not exist on type 
+'PrismaService'.
+
+[7m105[0m       await this.prisma.otp_codes.update({
+[7m   [0m [91m                        ~~~~~~~~~[0m
+[96msrc/auth/auth.service.ts[0m:[93m113[0m:[93m23[0m - 
+[91merror[0m[90m TS2339: [0mProperty 'otp_codes' does not exist on type 
+'PrismaService'.
+
+[7m113[0m     await this.prisma.otp_codes.update({
+[7m   [0m [91m                      ~~~~~~~~~[0m
+[96msrc/auth/auth.service.ts[0m:[93m120[0m:[93m16[0m - 
+[91merror[0m[90m TS2353: [0mObject literal may only specify known 
+properties, and 'phone_hash' does not exist in type 'usersWhereUniqueInput'.
+
+[7m120[0m       where: { phone_hash: phoneHash },
+[7m   [0m [91m               ~~~~~~~~~~[0m
+
+  [96m../../node_modules/.pnpm/@prisma+client@5.22.0_prisma@5.22.0/node_modu
+les/.prisma/client/index.d.ts[0m:[93m10333[0m:[93m5[0m
+    [7m10333[0m     where: usersWhereUniqueInput
+    [7m     [0m [96m    ~~~~~[0m
+    The expected type comes from property 'where' which is declared here on 
+type '{ select?: usersSelect<DefaultArgs> | null | undefined; where: 
+usersWhereUniqueInput; }'
+[96msrc/auth/auth.service.ts[0m:[93m128[0m:[93m11[0m - 
+[91merror[0m[90m TS2353: [0mObject literal may only specify known 
+properties, and 'phone_hash' does not exist in type 
+'(Without<usersCreateInput, usersUncheckedCreateInput> & 
+usersUncheckedCreateInput) | (Without<...> & usersCreateInput)'.
+
+[7m128[0m           phone_hash: phoneHash,
+[7m   [0m [91m          ~~~~~~~~~~[0m
+
+  [96m../../node_modules/.pnpm/@prisma+client@5.22.0_prisma@5.22.0/node_modu
+les/.prisma/client/index.d.ts[0m:[93m10488[0m:[93m5[0m
+    [7m10488[0m     data: XOR<usersCreateInput, usersUncheckedCreateInput>
+    [7m     [0m [96m    ~~~~[0m
+    The expected type comes from property 'data' which is declared here on 
+type '{ select?: usersSelect<DefaultArgs> | null | undefined; data: 
+(Without<usersCreateInput, usersUncheckedCreateInput> & 
+usersUncheckedCreateInput) | (Without<...> & usersCreateInput); }'
+[96msrc/auth/auth.service.ts[0m:[93m139[0m:[93m15[0m - 
+[91merror[0m[90m TS2353: [0mObject literal may only specify known 
+properties, and 'phone_verified_at' does not exist in type 
+'(Without<usersUpdateInput, usersUncheckedUpdateInput> & 
+usersUncheckedUpdateInput) | (Without<...> & usersUpdateInput)'.
+
+[7m139[0m       data: { phone_verified_at: new Date() },
+[7m   [0m [91m              ~~~~~~~~~~~~~~~~~[0m
+
+  [96m../../node_modules/.pnpm/@prisma+client@5.22.0_prisma@5.22.0/node_modu
+les/.prisma/client/index.d.ts[0m:[93m10526[0m:[93m5[0m
+    [7m10526[0m     data: XOR<usersUpdateInput, usersUncheckedUpdateInput>
+    [7m     [0m [96m    ~~~~[0m
+    The expected type comes from property 'data' which is declared here on 
+type '{ select?: usersSelect<DefaultArgs> | null | undefined; data: 
+(Without<usersUpdateInput, usersUncheckedUpdateInput> & 
+usersUncheckedUpdateInput) | (Without<...> & usersUpdateInput); where: 
+usersWhereUniqueInput; }'
+[96msrc/auth/auth.service.ts[0m:[93m156[0m:[93m28[0m - 
+[91merror[0m[90m TS2339: [0mProperty 'phone_masked' does not exist on 
+type '{ name: string | null; id: string; phone: string; phone_e164: string; 
+role: string; last_login_at: Date | null; login_count: number; created_at: 
+Date; updated_at: Date; }'.
+
+[7m156[0m         phone_masked: user.phone_masked,
+[7m   [0m [91m                           ~~~~~~~~~~~~[0m
+[96msrc/auth/auth.service.ts[0m:[93m169[0m:[93m39[0m - 
+[91merror[0m[90m TS2339: [0mProperty 'sessions' does not exist on type 
+'PrismaService'.
+
+[7m169[0m     const session = await this.prisma.sessions.create({
+[7m   [0m [91m                                      ~~~~~~~~[0m
+[96msrc/auth/auth.service.ts[0m:[93m184[0m:[93m23[0m - 
+[91merror[0m[90m TS2339: [0mProperty 'sessions' does not exist on type 
+'PrismaService'.
+
+[7m184[0m     await this.prisma.sessions.updateMany({
+[7m   [0m [91m                      ~~~~~~~~[0m
+[96msrc/auth/auth.service.ts[0m:[93m238[0m:[93m9[0m - 
+[91merror[0m[90m TS2353: [0mObject literal may only specify known 
+properties, and 'phone_masked' does not exist in type 
+'usersSelect<DefaultArgs>'.
+
+[7m238[0m         phone_masked: true,
+[7m   [0m [91m        ~~~~~~~~~~~~[0m
+
+  [96m../../node_modules/.pnpm/@prisma+client@5.22.0_prisma@5.22.0/node_modu
+les/.prisma/client/index.d.ts[0m:[93m10329[0m:[93m5[0m
+    [7m10329[0m     select?: usersSelect<ExtArgs> | null
+    [7m     [0m [96m    ~~~~~~[0m
+    The expected type comes from property 'select' which is declared here on 
+type '{ select?: usersSelect<DefaultArgs> | null | undefined; where: 
+usersWhereUniqueInput; }'
+[96msrc/auth/auth.service.ts[0m:[93m244[0m:[93m23[0m - 
+[91merror[0m[90m TS2339: [0mProperty 'status' does not exist on type '{ 
+name: string | null; id: string; phone: string; phone_e164: string; role: 
+string; last_login_at: Date | null; login_count: number; created_at: Date; 
+updated_at: Date; }'.
+
+[7m244[0m     if (!user || user.status !== 'active') {
+[7m   [0m [91m                      ~~~~~~[0m
+[96msrc/donors/donors.controller.ts[0m:[93m15[0m:[93m10[0m - 
+[91merror[0m[90m TS2305: [0mModule '"@prisma/client"' has no exported 
+member 'blood_group'.
+
+[7m15[0m import { blood_group, availability_state } from '@prisma/client';
+[7m  [0m [91m         ~~~~~~~~~~~[0m
+[96msrc/donors/donors.controller.ts[0m:[93m15[0m:[93m23[0m - 
+[91merror[0m[90m TS2305: [0mModule '"@prisma/client"' has no exported 
+member 'availability_state'.
+
+[7m15[0m import { blood_group, availability_state } from '@prisma/client';
+[7m  [0m [91m                      ~~~~~~~~~~~~~~~~~~[0m
+[96msrc/donors/donors.service.ts[0m:[93m3[0m:[93m10[0m - 
+[91merror[0m[90m TS2305: [0mModule '"@prisma/client"' has no exported 
+member 'blood_group'.
+
+[7m3[0m import { blood_group, availability_state } from '@prisma/client';
+[7m [0m [91m         ~~~~~~~~~~~[0m
+[96msrc/donors/donors.service.ts[0m:[93m3[0m:[93m23[0m - 
+[91merror[0m[90m TS2305: [0mModule '"@prisma/client"' has no exported 
+member 'availability_state'.
+
+[7m3[0m import { blood_group, availability_state } from '@prisma/client';
+[7m [0m [91m                      ~~~~~~~~~~~~~~~~~~[0m
+[96msrc/donors/donors.service.ts[0m:[93m42[0m:[93m9[0m - 
+[91merror[0m[90m TS2322: [0mType 'Date' is not assignable to type 
+'string'.
+
+[7m42[0m         date_of_birth: data.date_of_birth,
+[7m  [0m [91m        ~~~~~~~~~~~~~[0m
+
+  [96m../../node_modules/.pnpm/@prisma+client@5.22.0_prisma@5.22.0/node_modu
+les/.prisma/client/index.d.ts[0m:[93m12093[0m:[93m5[0m
+    [7m12093[0m     date_of_birth: string
+    [7m     [0m [96m    ~~~~~~~~~~~~~[0m
+    The expected type comes from property 'date_of_birth' which is declared 
+here on type '(Without<donorsCreateInput, donorsUncheckedCreateInput> & 
+donorsUncheckedCreateInput) | (Without<...> & donorsCreateInput)'
+[96msrc/donors/donors.service.ts[0m:[93m56[0m:[93m23[0m - 
+[91merror[0m[90m TS2339: [0mProperty 'donor_consents' does not exist on 
+type 'PrismaService'.
+
+[7m56[0m     await this.prisma.donor_consents.createMany({
+[7m  [0m [91m                      ~~~~~~~~~~~~~~[0m
+[96msrc/donors/donors.service.ts[0m:[93m73[0m:[93m7[0m - 
+[91merror[0m[90m TS2322: [0mType '{ users: { select: { id: true; name: 
+true; phone_masked: true; }; }; }' is not assignable to type 'never'.
+
+[7m73[0m       include: {
+[7m  [0m [91m      ~~~~~~~[0m
+
+  [96msrc/donors/donors.service.ts[0m:[93m73[0m:[93m7[0m
+    [7m 73[0m       include: {
+    [7m   [0m [96m      ~~~~~~~~~~[0m
+    [7m 74[0m         users: {
+    [7m   [0m [96m~~~~~~~~~~~~~~~~[0m
+    [7m...[0m 
+    [7m 76[0m         },
+    [7m   [0m [96m~~~~~~~~~~[0m
+    [7m 77[0m       },
+    [7m   [0m [96m~~~~~~~[0m
+    The expected type comes from property 'include' which is declared here 
+on type '{ where: { user_id: string; }; include: never; }'
+[96msrc/donors/donors.service.ts[0m:[93m151[0m:[93m7[0m - 
+[91merror[0m[90m TS2322: [0mType '{ users: { select: { id: true; name: 
+true; phone_masked: true; }; }; }' is not assignable to type 'never'.
+
+[7m151[0m       include: {
+[7m   [0m [91m      ~~~~~~~[0m
+[96msrc/invitations/invitations.service.ts[0m:[93m4[0m:[93m10[0m - 
+[91merror[0m[90m TS2305: [0mModule '"@prisma/client"' has no exported 
+member 'request_status'.
+
+[7m4[0m import { request_status, response_status } from '@prisma/client';
+[7m [0m [91m         ~~~~~~~~~~~~~~[0m
+[96msrc/invitations/invitations.service.ts[0m:[93m4[0m:[93m26[0m - 
+[91merror[0m[90m TS2305: [0mModule '"@prisma/client"' has no exported 
+member 'response_status'.
+
+[7m4[0m import { request_status, response_status } from '@prisma/client';
+[7m [0m [91m                         ~~~~~~~~~~~~~~~[0m
+[96msrc/invitations/invitations.service.ts[0m:[93m16[0m:[93m40[0m - 
+[91merror[0m[90m TS2339: [0mProperty 'request_responses' does not exist 
+on type 'PrismaService'.
+
+[7m16[0m     const response = await 
+this.prisma.request_responses.findUnique({
+[7m  [0m [91m                                       ~~~~~~~~~~~~~~~~~[0m
+[96msrc/invitations/invitations.service.ts[0m:[93m63[0m:[93m40[0m - 
+[91merror[0m[90m TS2339: [0mProperty 'request_responses' does not exist 
+on type 'PrismaService'.
+
+[7m63[0m     const response = await 
+this.prisma.request_responses.findUnique({
+[7m  [0m [91m                                       ~~~~~~~~~~~~~~~~~[0m
+[96msrc/invitations/invitations.service.ts[0m:[93m87[0m:[93m36[0m - 
+[91merror[0m[90m TS2339: [0mProperty 'request_responses' does not exist 
+on type 'Omit<PrismaClient<PrismaClientOptions, never, DefaultArgs>, "$on" | 
+"$connect" | "$disconnect" | "$use" | "$transaction" | "$extends">'.
+
+[7m87[0m       const commitments = await tx.request_responses.count({
+[7m  [0m [91m                                   ~~~~~~~~~~~~~~~~~[0m
+[96msrc/invitations/invitations.service.ts[0m:[93m98[0m:[93m17[0m - 
+[91merror[0m[90m TS2339: [0mProperty 'request_responses' does not exist 
+on type 'Omit<PrismaClient<PrismaClientOptions, never, DefaultArgs>, "$on" | 
+"$connect" | "$disconnect" | "$use" | "$transaction" | "$extends">'.
+
+[7m98[0m       return tx.request_responses.update({
+[7m  [0m [91m                ~~~~~~~~~~~~~~~~~[0m
+[96msrc/invitations/invitations.service.ts[0m:[93m125[0m:[93m40[0m - 
+[91merror[0m[90m TS2339: [0mProperty 'request_responses' does not exist 
+on type 'PrismaService'.
+
+[7m125[0m     const response = await 
+this.prisma.request_responses.findUnique({
+[7m   [0m [91m                                       ~~~~~~~~~~~~~~~~~[0m
+[96msrc/invitations/invitations.service.ts[0m:[93m137[0m:[93m39[0m - 
+[91merror[0m[90m TS2339: [0mProperty 'request_responses' does not exist 
+on type 'PrismaService'.
+
+[7m137[0m     const updated = await this.prisma.request_responses.update({
+[7m   [0m [91m                                      ~~~~~~~~~~~~~~~~~[0m
+[96msrc/invitations/invitations.service.ts[0m:[93m159[0m:[93m42[0m - 
+[91merror[0m[90m TS2339: [0mProperty 'request_responses' does not exist 
+on type 'PrismaService'.
+
+[7m159[0m     const invitation = await 
+this.prisma.request_responses.findUnique({
+[7m   [0m [91m                                         
+~~~~~~~~~~~~~~~~~[0m
+[96msrc/invitations/invitations.service.ts[0m:[93m174[0m:[93m39[0m - 
+[91merror[0m[90m TS2339: [0mProperty 'request_responses' does not exist 
+on type 'PrismaService'.
+
+[7m174[0m     const updated = await this.prisma.request_responses.update({
+[7m   [0m [91m                                      ~~~~~~~~~~~~~~~~~[0m
+[96msrc/jobs/cleanup.service.ts[0m:[93m29[0m:[93m42[0m - 
+[91merror[0m[90m TS2339: [0mProperty 'otp_codes' does not exist on type 
+'PrismaService'.
+
+[7m29[0m     const expiredOtp = await this.prisma.otp_codes.deleteMany({
+[7m  [0m [91m                                         ~~~~~~~~~[0m
+[96msrc/jobs/cleanup.service.ts[0m:[93m34[0m:[93m47[0m - 
+[91merror[0m[90m TS2339: [0mProperty 'blood_requests' does not exist on 
+type 'PrismaService'.
+
+[7m34[0m     const expiredRequests = await 
+this.prisma.blood_requests.updateMany({
+[7m  [0m [91m                                              
+~~~~~~~~~~~~~~[0m
+[96msrc/jobs/cleanup.service.ts[0m:[93m43[0m:[93m43[0m - 
+[91merror[0m[90m TS2339: [0mProperty 'messages' does not exist on type 
+'PrismaService'.
+
+[7m43[0m     const oldMessages = await this.prisma.messages.deleteMany({
+[7m  [0m [91m                                          ~~~~~~~~[0m
+[96msrc/requests/matching.service.ts[0m:[93m4[0m:[93m10[0m - 
+[91merror[0m[90m TS2305: [0mModule '"@prisma/client"' has no exported 
+member 'blood_group'.
+
+[7m4[0m import { blood_group, response_status } from '@prisma/client';
+[7m [0m [91m         ~~~~~~~~~~~[0m
+[96msrc/requests/matching.service.ts[0m:[93m4[0m:[93m23[0m - 
+[91merror[0m[90m TS2305: [0mModule '"@prisma/client"' has no exported 
+member 'response_status'.
+
+[7m4[0m import { blood_group, response_status } from '@prisma/client';
+[7m [0m [91m                      ~~~~~~~~~~~~~~~[0m
+[96msrc/requests/matching.service.ts[0m:[93m20[0m:[93m39[0m - 
+[91merror[0m[90m TS2339: [0mProperty 'blood_requests' does not exist on 
+type 'PrismaService'.
+
+[7m20[0m     const request = await this.prisma.blood_requests.findUnique({
+[7m  [0m [91m                                      ~~~~~~~~~~~~~~[0m
+[96msrc/requests/matching.service.ts[0m:[93m49[0m:[93m50[0m - 
+[91merror[0m[90m TS2339: [0mProperty 'request_responses' does not exist 
+on type 'PrismaService'.
+
+[7m49[0m       const existingResponse = await 
+this.prisma.request_responses.findUnique({
+[7m  [0m [91m                                                 
+~~~~~~~~~~~~~~~~~[0m
+[96msrc/requests/matching.service.ts[0m:[93m62[0m:[93m42[0m - 
+[91merror[0m[90m TS2339: [0mProperty 'request_responses' does not exist 
+on type 'PrismaService'.
+
+[7m62[0m       const response = await 
+this.prisma.request_responses.create({
+[7m  [0m [91m                                         
+~~~~~~~~~~~~~~~~~[0m
+[96msrc/requests/matching.service.ts[0m:[93m91[0m:[93m40[0m - 
+[91merror[0m[90m TS2339: [0mProperty 'request_responses' does not exist 
+on type 'PrismaService'.
+
+[7m91[0m     const response = await 
+this.prisma.request_responses.findUnique({
+[7m  [0m [91m                                       ~~~~~~~~~~~~~~~~~[0m
+Found 62 error(s).
+
+[96msrc/requests/matching.service.ts[0m:[93m104[0m:[93m39[0m - 
+[91merror[0m[90m TS2339: [0mProperty 'request_responses' does not exist 
+on type 'PrismaService'.
+
+[7m104[0m     const updated = await this.prisma.request_responses.update({
+[7m   [0m [91m                                      ~~~~~~~~~~~~~~~~~[0m
+[96msrc/requests/matching.service.ts[0m:[93m122[0m:[93m39[0m - 
+[91merror[0m[90m TS2339: [0mProperty 'blood_requests' does not exist on 
+type 'PrismaService'.
+
+[7m122[0m     const request = await this.prisma.blood_requests.findUnique({
+[7m   [0m [91m                                      ~~~~~~~~~~~~~~[0m
+[96msrc/requests/matching.service.ts[0m:[93m130[0m:[93m24[0m - 
+[91merror[0m[90m TS2339: [0mProperty 'request_responses' does not exist 
+on type 'PrismaService'.
+
+[7m130[0m     return this.prisma.request_responses.findMany({
+[7m   [0m [91m                       ~~~~~~~~~~~~~~~~~[0m
+[96msrc/requests/requests.controller.ts[0m:[93m16[0m:[93m10[0m - 
+[91merror[0m[90m TS2305: [0mModule '"@prisma/client"' has no exported 
+member 'blood_group'.
+
+[7m16[0m import { blood_group, request_status } from '@prisma/client';
+[7m  [0m [91m         ~~~~~~~~~~~[0m
+[96msrc/requests/requests.controller.ts[0m:[93m16[0m:[93m23[0m - 
+[91merror[0m[90m TS2305: [0mModule '"@prisma/client"' has no exported 
+member 'request_status'.
+
+[7m16[0m import { blood_group, request_status } from '@prisma/client';
+[7m  [0m [91m                      ~~~~~~~~~~~~~~[0m
+[96msrc/requests/requests.controller.ts[0m:[93m156[0m:[93m17[0m - 
+[91merror[0m[90m TS2339: [0mProperty 'created_by_user_id' does not exist 
+on type '{ id: string; created_at: Date; updated_at: Date; status: string; 
+province_code: string; district_code: string; public_id: string; 
+hospital_name: string; hospital_org_id: string | null; ... 14 more ...; 
+cancellation_reason: string | null; }'.
+
+[7m156[0m     if (request.created_by_user_id !== req.user.userId) {
+[7m   [0m [91m                ~~~~~~~~~~~~~~~~~~[0m
+[96msrc/requests/requests.service.ts[0m:[93m3[0m:[93m10[0m - 
+[91merror[0m[90m TS2305: [0mModule '"@prisma/client"' has no exported 
+member 'blood_group'.
+
+[7m3[0m import { blood_group, blood_component, urgency, request_status } 
+from '@prisma/client';
+[7m [0m [91m         ~~~~~~~~~~~[0m
+[96msrc/requests/requests.service.ts[0m:[93m3[0m:[93m23[0m - 
+[91merror[0m[90m TS2305: [0mModule '"@prisma/client"' has no exported 
+member 'blood_component'.
+
+[7m3[0m import { blood_group, blood_component, urgency, request_status } 
+from '@prisma/client';
+[7m [0m [91m                      ~~~~~~~~~~~~~~~[0m
+[96msrc/requests/requests.service.ts[0m:[93m3[0m:[93m40[0m - 
+[91merror[0m[90m TS2305: [0mModule '"@prisma/client"' has no exported 
+member 'urgency'.
+
+[7m3[0m import { blood_group, blood_component, urgency, request_status } 
+from '@prisma/client';
+[7m [0m [91m                                       ~~~~~~~[0m
+[96msrc/requests/requests.service.ts[0m:[93m3[0m:[93m49[0m - 
+[91merror[0m[90m TS2305: [0mModule '"@prisma/client"' has no exported 
+member 'request_status'.
+
+[7m3[0m import { blood_group, blood_component, urgency, request_status } 
+from '@prisma/client';
+[7m [0m [91m                                                
+~~~~~~~~~~~~~~[0m
+[96msrc/requests/requests.service.ts[0m:[93m43[0m:[93m7[0m - 
+[91merror[0m[90m TS2322: [0mType '{ public_id: string; 
+blood_group_needed: blood_group; component: any; units_needed: number; 
+urgency: any; province_code: string; district_code: string; hospital_name: 
+string; hospital_org_id: string | undefined; needed_by: Date; contact_name: 
+string; clinical_note: string | undefined; share_contact_publicly: 
+boolean...' is not assignable to type '(Without<requestsCreateInput, 
+requestsUncheckedCreateInput> & requestsUncheckedCreateInput) | 
+(Without<...> & requestsCreateInput)'.
+  Type '{ public_id: string; blood_group_needed: blood_group; component: 
+any; units_needed: number; urgency: any; province_code: string; 
+district_code: string; hospital_name: string; hospital_org_id: string | 
+undefined; needed_by: Date; contact_name: string; clinical_note: string | 
+undefined; share_contact_publicly: boolean...' is not assignable to type 
+'Without<requestsUncheckedCreateInput, requestsCreateInput> & 
+requestsCreateInput'.
+    Property 'contact_phone' is missing in type '{ public_id: string; 
+blood_group_needed: blood_group; component: any; units_needed: number; 
+urgency: any; province_code: string; district_code: string; hospital_name: 
+string; hospital_org_id: string | undefined; needed_by: Date; contact_name: 
+string; clinical_note: string | undefined; share_contact_publicly: 
+boolean...' but required in type 'requestsCreateInput'.
+
+[7m43[0m       data: {
+[7m  [0m [91m      ~~~~[0m
+
+  [96m../../node_modules/.pnpm/@prisma+client@5.22.0_prisma@5.22.0/node_modu
+les/.prisma/client/index.d.ts[0m:[93m12588[0m:[93m5[0m
+    [7m12588[0m     contact_phone: string
+    [7m     [0m [96m    ~~~~~~~~~~~~~[0m
+    'contact_phone' is declared here.
+  [96m../../node_modules/.pnpm/@prisma+client@5.22.0_prisma@5.22.0/node_modu
+les/.prisma/client/index.d.ts[0m:[93m9530[0m:[93m5[0m
+    [7m9530[0m     data: XOR<requestsCreateInput, 
+requestsUncheckedCreateInput>
+    [7m    [0m [96m    ~~~~[0m
+    The expected type comes from property 'data' which is declared here on 
+type '{ select?: requestsSelect<DefaultArgs> | null | undefined; data: 
+(Without<requestsCreateInput, requestsUncheckedCreateInput> & 
+requestsUncheckedCreateInput) | (Without<...> & requestsCreateInput); }'
+

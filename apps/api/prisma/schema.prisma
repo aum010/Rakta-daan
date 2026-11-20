@@ -1,0 +1,263 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextIndex", "fullTextSearch"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model abuse_reports {
+  id                                             String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  request_id                                     String?         @db.Uuid
+  reporter_user_id                               String?         @db.Uuid
+  reason                                         String          @db.VarChar(40)
+  details                                        String?
+  contact_enc                                    String?
+  status                                         abuse_status    @default(open)
+  resolution_note                                String?
+  resolved_by_user_id                            String?         @db.Uuid
+
+  created_at                                     DateTime        @default(now()) @db.Timestamp(6)
+  updated_at                                     DateTime        @updatedAt @db.Timestamp(6)
+}
+
+model blood_inventory {
+  id                                             String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  org_id                                         String          @db.Uuid
+  blood_group                                    String          @db.VarChar(10)
+  component                                      String          @db.VarChar(20)
+  units                                          Int             @default(0)
+  last_updated                                   DateTime        @default(now()) @db.Timestamp(6)
+  note                                           String?
+
+  created_at                                     DateTime        @default(now()) @db.Timestamp(6)
+  updated_at                                     DateTime        @updatedAt @db.Timestamp(6)
+
+  @@unique([org_id, blood_group, component])
+}
+
+model camps {
+  id                                             String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title                                          String          @db.VarChar(120)
+  title_ne                                       String?         @db.VarChar(120)
+  description                                    String?
+  province_code                                  String          @db.VarChar(2)
+  district_code                                  String          @db.VarChar(3)
+  venue                                          String          @db.VarChar(160)
+  organizer_name                                 String          @db.VarChar(120)
+  contact_phone                                  String?         @db.VarChar(24)
+  starts_at                                      DateTime        @db.Timestamp(6)
+  ends_at                                        DateTime        @db.Timestamp(6)
+  slug                                           String          @unique @db.VarChar(60)
+
+  created_at                                     DateTime        @default(now()) @db.Timestamp(6)
+  updated_at                                     DateTime        @updatedAt @db.Timestamp(6)
+}
+
+model donors {
+  id                                             String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user_id                                        String          @unique @db.Uuid
+  name                                           String          @db.VarChar(80)
+  phone                                          String          @unique @db.VarChar(24)
+  phone_e164                                     String          @unique @db.VarChar(24)
+  blood_group                                    String          @db.VarChar(10)
+  sex                                            String          @db.VarChar(10)
+  date_of_birth                                  String          @db.VarChar(10)
+  weight_kg                                      Int?
+  province_code                                  String          @db.VarChar(2)
+  district_code                                  String          @db.VarChar(3)
+  municipality                                   String?         @db.VarChar(80)
+  ward                                           String?         @db.VarChar(4)
+  last_donation_date                             String?         @db.VarChar(10)
+  availability                                   donor_availability @default(available)
+  availability_confirmed_at                      DateTime?       @db.Timestamp(6)
+  deferred_until                                 String?         @db.VarChar(10)
+  deferral_reason                                String?         @db.VarChar(200)
+  consent_alerts                                 Boolean         @default(true)
+  consent_sms                                    Boolean         @default(false)
+  consent_whatsapp                               Boolean         @default(false)
+  consent_contact_release                        Boolean         @default(false)
+  withdrawn_at                                   DateTime?       @db.Timestamp(6)
+
+  created_at                                     DateTime        @default(now()) @db.Timestamp(6)
+  updated_at                                     DateTime        @updatedAt @db.Timestamp(6)
+}
+
+model invitations {
+  id                                             String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  request_id                                     String          @db.Uuid
+  donor_id                                       String          @db.Uuid
+  status                                         invitation_status @default(pending)
+  responded_at                                   DateTime?       @db.Timestamp(6)
+  note                                           String?
+
+  created_at                                     DateTime        @default(now()) @db.Timestamp(6)
+  updated_at                                     DateTime        @updatedAt @db.Timestamp(6)
+}
+
+model jobs {
+  id                                             String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                                           String          @db.VarChar(100)
+  status                                         job_status      @default(pending)
+  attempts                                       Int             @default(0)
+  max_attempts                                   Int             @default(3)
+  error                                          String?
+  scheduled_at                                   DateTime        @db.Timestamp(6)
+  completed_at                                   DateTime?       @db.Timestamp(6)
+  data                                           String?
+
+  created_at                                     DateTime        @default(now()) @db.Timestamp(6)
+  updated_at                                     DateTime        @updatedAt @db.Timestamp(6)
+
+  @@index([name, status])
+  @@index([scheduled_at])
+}
+
+model organizations {
+  id                                             String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                                           String          @db.VarChar(160)
+  slug                                           String          @unique @db.VarChar(60)
+  type                                           String          @db.VarChar(50)
+  province_code                                  String          @db.VarChar(2)
+  district_code                                  String          @db.VarChar(3)
+  address                                        String?         @db.VarChar(255)
+  phone                                          String?         @db.VarChar(24)
+  email                                          String?         @db.VarChar(160)
+  verified                                       Boolean         @default(false)
+  verified_at                                    DateTime?       @db.Timestamp(6)
+  verification_note                              String?
+  suspended                                      Boolean         @default(false)
+  suspended_at                                   DateTime?       @db.Timestamp(6)
+  suspended_by_user_id                           String?         @db.Uuid
+  suspended_reason                               String?
+
+  created_at                                     DateTime        @default(now()) @db.Timestamp(6)
+  updated_at                                     DateTime        @updatedAt @db.Timestamp(6)
+}
+
+model requests {
+  id                                             String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  public_id                                      String          @unique @db.VarChar(14)
+  hospital_name                                  String          @db.VarChar(160)
+  hospital_org_id                                String?         @db.Uuid
+  blood_group_needed                             String          @db.VarChar(10)
+  component                                      String          @db.VarChar(20)
+  units_needed                                   Int             @default(1)
+  urgency                                        String          @db.VarChar(20)
+  province_code                                  String          @db.VarChar(2)
+  district_code                                  String          @db.VarChar(3)
+  needed_by                                      DateTime        @db.Timestamp(6)
+  contact_name                                   String          @db.VarChar(80)
+  contact_phone                                  String          @db.VarChar(24)
+  patient_reference                              String?         @db.VarChar(80)
+  clinical_note                                  String?         @db.VarChar(500)
+  share_contact_publicly                         Boolean         @default(false)
+  notify_radius_km                               Int             @default(75)
+  status                                         request_status  @default(open)
+  fulfilled_at                                   DateTime?       @db.Timestamp(6)
+  cancelled_at                                   DateTime?       @db.Timestamp(6)
+  cancelled_by_user_id                           String?         @db.Uuid
+  cancellation_reason                            String?
+
+  created_at                                     DateTime        @default(now()) @db.Timestamp(6)
+  updated_at                                     DateTime        @updatedAt @db.Timestamp(6)
+}
+
+model users {
+  id                                             String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  phone                                          String          @unique @db.VarChar(24)
+  phone_e164                                     String          @unique @db.VarChar(24)
+  name                                           String?         @db.VarChar(80)
+  role                                           String          @default("user") @db.VarChar(20)
+  last_login_at                                  DateTime?       @db.Timestamp(6)
+  login_count                                    Int             @default(0)
+
+  created_at                                     DateTime        @default(now()) @db.Timestamp(6)
+  updated_at                                     DateTime        @updatedAt @db.Timestamp(6)
+}
+
+model otp_codes {
+  id                                             String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  phone_hash                                     String          @db.VarChar(64)
+  purpose                                        String          @db.VarChar(50)
+  code_hash                                      String          @db.VarChar(64)
+  ip_hash                                        String?         @db.VarChar(64)
+  attempts                                       Int             @default(0)
+  max_attempts                                   Int             @default(3)
+  consumed_at                                    DateTime?       @db.Timestamp(6)
+  expires_at                                     DateTime        @db.Timestamp(6)
+
+  created_at                                     DateTime        @default(now()) @db.Timestamp(6)
+  updated_at                                     DateTime        @updatedAt @db.Timestamp(6)
+
+  @@index([phone_hash, purpose, consumed_at])
+}
+
+model sessions {
+  id                                             String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user_id                                        String          @db.Uuid
+  token_hash                                     String          @db.VarChar(64)
+  revoked_at                                     DateTime?       @db.Timestamp(6)
+  expires_at                                     DateTime        @db.Timestamp(6)
+
+  created_at                                     DateTime        @default(now()) @db.Timestamp(6)
+  updated_at                                     DateTime        @updatedAt @db.Timestamp(6)
+
+  @@index([user_id, revoked_at])
+}
+
+model messages {
+  id                                             String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  to                                             String          @db.VarChar(24)
+  body                                           String          @db.VarChar(160)
+  status                                         String          @default("pending") @db.VarChar(20)
+  provider                                       String          @default("twilio") @db.VarChar(20)
+  provider_id                                    String?         @db.VarChar(100)
+  error                                          String?         @db.VarChar(200)
+
+  created_at                                     DateTime        @default(now()) @db.Timestamp(6)
+  updated_at                                     DateTime        @updatedAt @db.Timestamp(6)
+
+  @@index([status])
+}
+
+enum abuse_status {
+  open
+  reviewing
+  resolved
+  dismissed
+}
+
+enum donor_availability {
+  available
+  unavailable
+  paused
+}
+
+enum invitation_status {
+  pending
+  accepted
+  declined
+  withdrawn
+}
+
+enum job_status {
+  pending
+  processing
+  completed
+  failed
+}
+
+enum request_status {
+  open
+  fulfilled
+  cancelled
+}
+
+enum user_role {
+  user
+  admin
+  org_admin
+}
